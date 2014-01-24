@@ -1,7 +1,6 @@
 (function () {
   'use strict';
-  angular.module('rt.importscope', ['ui.router']);
-  angular.module('rt.importscope').directive('importScope', [
+  angular.module('rt.importscope', ['ui.router']).directive('importScope', [
     '$rootElement',
     function ($rootElement) {
       return {
