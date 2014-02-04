@@ -1,4 +1,4 @@
-angular.module('rt.importscope', ['ui.router']).directive('importScope', function ($rootElement) {
+angular.module('rt.importscope', ['ui.router']).directive('importScope', function ($rootElement, $timeout) {
     return {
         scope: true,
         link: function (scope, element, attrs) {
@@ -23,12 +23,14 @@ angular.module('rt.importscope', ['ui.router']).directive('importScope', functio
             }
 
             scope.$on('$stateChangeSuccess', function () {
-                var parentScope = findScope(viewName);
-                if (!parentScope) {
-                    return;
-                }
+                $timeout(function () {
+                    var parentScope = findScope(viewName);
+                    if (!parentScope) {
+                        return;
+                    }
 
-                reparent(parentScope, scope);
+                    reparent(parentScope, scope);
+                });
             });
         }
     };

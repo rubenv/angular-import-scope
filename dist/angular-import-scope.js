@@ -2,7 +2,8 @@
   'use strict';
   angular.module('rt.importscope', ['ui.router']).directive('importScope', [
     '$rootElement',
-    function ($rootElement) {
+    '$timeout',
+    function ($rootElement, $timeout) {
       return {
         scope: true,
         link: function (scope, element, attrs) {
@@ -24,11 +25,13 @@
             child.__proto__ = parent;
           }
           scope.$on('$stateChangeSuccess', function () {
-            var parentScope = findScope(viewName);
-            if (!parentScope) {
-              return;
-            }
-            reparent(parentScope, scope);
+            $timeout(function () {
+              var parentScope = findScope(viewName);
+              if (!parentScope) {
+                return;
+              }
+              reparent(parentScope, scope);
+            });
           });
         }
       };
