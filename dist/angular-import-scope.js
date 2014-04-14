@@ -9,6 +9,7 @@
         link: function (scope, element, attrs) {
           var viewName = attrs.importScope;
           var root = angular.element($rootElement);
+          var originalParent = scope.__proto__;
           function findScope(name) {
             var views = root.find('ui-view, [ui-view]');
             for (var i = 0; i < views.length; i++) {
@@ -20,17 +21,16 @@
             }
             return null;
           }
-          function reparent(parent, child) {
-            child.$parent = parent;
-            child.__proto__ = parent;
-          }
+          scope.$on('$stateChangeStart', function () {
+            scope.__proto__ = originalParent;
+          });
           scope.$on('$stateChangeSuccess', function () {
             $timeout(function () {
               var parentScope = findScope(viewName);
               if (!parentScope) {
                 return;
               }
-              reparent(parentScope, scope);
+              scope.__proto__ = parentScope;
             });
           });
         }

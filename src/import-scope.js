@@ -4,6 +4,7 @@ angular.module('rt.importscope', ['ui.router']).directive('importScope', functio
         link: function (scope, element, attrs) {
             var viewName = attrs.importScope;
             var root = angular.element($rootElement);
+            var originalParent = scope.__proto__;
 
             function findScope(name) {
                 var views = root.find('ui-view, [ui-view]');
@@ -17,10 +18,9 @@ angular.module('rt.importscope', ['ui.router']).directive('importScope', functio
                 return null;
             }
 
-            function reparent(parent, child) {
-                child.$parent = parent;
-                child.__proto__ = parent;
-            }
+            scope.$on('$stateChangeStart', function () {
+                scope.__proto__ = originalParent;
+            });
 
             scope.$on('$stateChangeSuccess', function () {
                 $timeout(function () {
@@ -29,7 +29,7 @@ angular.module('rt.importscope', ['ui.router']).directive('importScope', functio
                         return;
                     }
 
-                    reparent(parentScope, scope);
+                    scope.__proto__ = parentScope;
                 });
             });
         }
