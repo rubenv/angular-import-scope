@@ -88,6 +88,8 @@ module.exports = (grunt) ->
         shell:
             protractor_update:
                 command: 'node_modules/protractor/bin/webdriver-manager update'
+                options:
+                    stdout: true
 
         sauce_tunnel:
             ci:
@@ -99,5 +101,5 @@ module.exports = (grunt) ->
 
     @registerTask 'default', ['test']
     @registerTask 'build', ['clean', 'jshint', 'concat', 'ngmin', 'uglify']
-    @registerTask 'test', ['build', 'connect:e2e', 'protractor:dev', 'watch:all']
+    @registerTask 'test', ['build', 'shell:protractor_update', 'connect:e2e', 'protractor:dev', 'watch:all']
     @registerTask 'ci', ['build', 'shell:protractor_update', 'sauce_tunnel', 'connect:e2e', 'protractor:ci']

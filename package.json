@@ -30,9 +30,9 @@
     "grunt-contrib-uglify": "~0.3.2",
     "grunt-contrib-watch": "~0.5.1",
     "grunt-ngmin": "0.0.3",
-    "grunt-protractor-runner": "~0.2.0",
+    "grunt-protractor-runner": "~0.2.4",
     "grunt-sauce-tunnel": "^0.2.0",
-    "protractor": "~0.17.0"
+    "protractor": "~0.21.0"
   },
   "repository": {
     "type": "git",
