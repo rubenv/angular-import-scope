@@ -21,20 +21,24 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "grunt": "~0.4.1",
+    "grunt": "~0.4.4",
+    "grunt-bump": "0.0.13",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-connect": "~0.6.0",
+    "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-uglify": "~0.3.2",
     "grunt-contrib-watch": "~0.5.1",
     "grunt-ngmin": "0.0.3",
-    "grunt-contrib-jshint": "~0.8.0",
     "grunt-protractor-runner": "~0.2.0",
-    "protractor": "~0.17.0",
-    "grunt-bump": "0.0.13"
+    "grunt-sauce-tunnel": "^0.2.0",
+    "protractor": "~0.17.0"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/rubenv/angular-import-scope.git"
+  },
+  "dependencies": {
+    "grunt-shell": "^0.6.4"
   }
 }
