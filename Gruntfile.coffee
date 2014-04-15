@@ -74,6 +74,7 @@ module.exports = (grunt) ->
                         chromeOnly: true
             ci:
                 configFile: 'test-config.js'
+                keepAlive: false
                 options:
                     args:
                         sauceUser: process.env.SAUCE_USERNAME
