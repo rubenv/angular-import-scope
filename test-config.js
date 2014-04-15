@@ -3,7 +3,5 @@ exports.config = {
         'test/*.js'
     ],
 
-    multiCapabilities: require('open-sauce-browsers')('angular-import-scope', {
-        legacy: true
-    })
+    multiCapabilities: require('open-sauce-browsers')('angular-import-scope')
 };
