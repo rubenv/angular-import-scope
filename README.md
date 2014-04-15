@@ -2,6 +2,8 @@
 
 > Import a scope from another ui-view.
 
+[![Build Status](https://travis-ci.org/rubenv/angular-import-scope.svg?branch=master)](https://travis-ci.org/rubenv/angular-import-scope)
+
 Angular.JS structures your data in nested scopes. Which is great, except when page structure doesn’t work like that and you need the inner data on a much higher level (say in the navigation). With import-scope, you can import the scope of a lower-level ui-view somewhere higher up.
 
 **Note**: This depends upon the excellent [ui-router](https://github.com/angular-ui/ui-router).
