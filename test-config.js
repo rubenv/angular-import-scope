@@ -1,20 +1,21 @@
+function testBrowser(name) {
+    return {
+        'browserName': name,
+        'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER || 'test',
+        'build': process.env.TRAVIS_BUILD_NUMBER,
+        'name': 'angular-import-scope'
+    }
+}
+
 exports.config = {
     specs: [
         'test/*.js'
     ],
 
     multiCapabilities: [
-        {
-            'browserName': 'chrome',
-            'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER || 'test',
-            'build': process.env.TRAVIS_BUILD_NUMBER,
-            'name': 'angular-import-scope'
-        },
-        {
-            'browserName': 'firefox',
-            'tunnel-identifier': process.env.TRAVIS_JOB_NUMBER || 'test',
-            'build': process.env.TRAVIS_BUILD_NUMBER,
-            'name': 'angular-import-scope'
-        },
+        testBrowser('chrome'),
+        testBrowser('firefox'),
+        testBrowser('safari'),
+        testBrowser('internet explorer'),
     ]
 };
