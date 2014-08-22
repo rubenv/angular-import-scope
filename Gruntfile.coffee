@@ -108,10 +108,10 @@ module.exports = (grunt) ->
             configFile: 'test-config.js'
             options:
                 keepAlive: false
-                capabilities: browser
                 args:
                     sauceUser: process.env.SAUCE_USERNAME
                     sauceKey: process.env.SAUCE_ACCESS_KEY
+                    capabilities: browser
         }
         browserTasks.push('protractor:ci_' + index)
     @config('protractor', protractorConfig)
