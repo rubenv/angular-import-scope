@@ -96,7 +96,7 @@ module.exports = (grunt) ->
 
         shell:
             protractor_update:
-                command: 'node_modules/protractor/bin/webdriver-manager update'
+                command: './node_modules/.bin/webdriver-manager update'
                 options:
                     stdout: true
 
