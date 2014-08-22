@@ -29,6 +29,7 @@
     "grunt-contrib-jshint": "~0.8.0",
     "grunt-contrib-uglify": "~0.3.2",
     "grunt-contrib-watch": "~0.5.1",
+    "grunt-jscs": "^0.6.2",
     "grunt-ngmin": "0.0.3",
     "grunt-protractor-runner": "~0.2.4",
     "grunt-sauce-tunnel": "^0.2.0",
