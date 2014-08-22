@@ -73,11 +73,11 @@ module.exports = (grunt) ->
 
         protractor:
             options:
-                keepAlive: true
                 noColor: false
             dev:
                 configFile: 'test-config.js'
                 options:
+                    keepAlive: true
                     args:
                         chromeOnly: true
             ci:
