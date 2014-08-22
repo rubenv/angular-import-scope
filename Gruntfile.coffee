@@ -113,7 +113,7 @@ module.exports = (grunt) ->
                     sauceUser: process.env.SAUCE_USERNAME
                     sauceKey: process.env.SAUCE_ACCESS_KEY
         }
-        browserTasks.push('ci_' + index)
+        browserTasks.push('protractor:ci_' + index)
     @config('protractor', protractorConfig)
     @registerTask 'ci_saucelabs', browserTasks
 
