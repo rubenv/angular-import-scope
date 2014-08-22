@@ -7,7 +7,7 @@ module.exports = (grunt) ->
     @loadNpmTasks('grunt-contrib-uglify')
     @loadNpmTasks('grunt-contrib-watch')
     @loadNpmTasks('grunt-jscs')
-    @loadNpmTasks('grunt-ngmin')
+    @loadNpmTasks('grunt-ng-annotate')
     @loadNpmTasks('grunt-protractor-runner')
     @loadNpmTasks('grunt-sauce-tunnel')
     @loadNpmTasks('grunt-shell')
@@ -56,7 +56,7 @@ module.exports = (grunt) ->
                 files: ['src/**.js', 'test/*{,/*}']
                 tasks: ['build', 'protractor:dev']
 
-        ngmin:
+        ngAnnotate:
             dist:
                 files:
                     'dist/<%= config.name %>.js': 'dist/<%= config.name %>.js'
@@ -109,6 +109,6 @@ module.exports = (grunt) ->
 
 
     @registerTask 'default', ['test']
-    @registerTask 'build', ['clean', 'jshint', 'jscs', 'concat', 'ngmin', 'uglify']
+    @registerTask 'build', ['clean', 'jshint', 'jscs', 'concat', 'ngAnnotate', 'uglify']
     @registerTask 'test', ['build', 'shell:protractor_update', 'connect:e2e', 'protractor:dev', 'watch:all']
     @registerTask 'ci', ['build', 'shell:protractor_update', 'sauce_tunnel', 'connect:e2e', 'protractor:ci']
