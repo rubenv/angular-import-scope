@@ -80,13 +80,6 @@ module.exports = (grunt) ->
                 options:
                     args:
                         chromeOnly: true
-            ci:
-                configFile: 'test-config-ci.js'
-                options:
-                    keepAlive: false
-                    args:
-                        sauceUser: process.env.SAUCE_USERNAME
-                        sauceKey: process.env.SAUCE_ACCESS_KEY
 
         bump:
             options:
@@ -107,8 +100,24 @@ module.exports = (grunt) ->
                     key: process.env.SAUCE_ACCESS_KEY
                     identifier: process.env.TRAVIS_JOB_NUMBER || 'test'
 
+    browsers = require('open-sauce-browsers')('angular-import-scope')
+    protractorConfig = @config('protractor')
+    browserTasks = []
+    for browser, index in browsers
+        protractorConfig['ci_' + index] = {
+            configFile: 'test-config.js'
+            options:
+                keepAlive: false
+                capabilities: browser
+                args:
+                    sauceUser: process.env.SAUCE_USERNAME
+                    sauceKey: process.env.SAUCE_ACCESS_KEY
+        }
+        browserTasks.push('ci_' + index)
+    @config('protractor', protractorConfig)
+    @registerTask 'ci_saucelabs', browserTasks
 
     @registerTask 'default', ['test']
     @registerTask 'build', ['clean', 'jshint', 'jscs', 'concat', 'ngAnnotate', 'uglify']
     @registerTask 'test', ['build', 'shell:protractor_update', 'connect:e2e', 'protractor:dev', 'watch:all']
-    @registerTask 'ci', ['build', 'shell:protractor_update', 'sauce_tunnel', 'connect:e2e', 'protractor:ci']
+    @registerTask 'ci', ['build', 'shell:protractor_update', 'sauce_tunnel', 'connect:e2e', 'ci_saucelabs']
