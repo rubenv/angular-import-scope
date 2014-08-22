@@ -1,6 +1,6 @@
 {
   "name": "angular-import-scope",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Import a scope from another ui-view.",
   "main": "index.js",
   "directories": {
