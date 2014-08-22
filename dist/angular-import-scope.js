@@ -1,40 +1,62 @@
 (function () {
     'use strict';
 
-angular.module('rt.importscope', ['ui.router']).directive('importScope', ["$rootElement", "$timeout", function ($rootElement, $timeout) {
-    return {
-        scope: true,
-        link: function (scope, element, attrs) {
-            var viewName = attrs.importScope;
-            var root = angular.element($rootElement);
-            var originalParent = scope.__proto__;
+angular.module('rt.importscope', ['ui.router']).directive('importScope', ["$compile", "$animate", "$rootElement", "$timeout", function ($compile, $animate, $rootElement, $timeout) {
+    // Trim polyfill for old browsers (instead of jQuery)
+    // Based on AngularJS-v1.2.2 (angular.js#620)
+    var trim = (function () {
+        if (!String.prototype.trim) {
+            return function (value) {
+                return (typeof value === 'string') ? value.replace(/^\s*/, '').replace(/\s*$/, '') : value;
+            };
+        }
+        return function (value) {
+            return (typeof value === 'string') ? value.trim() : value;
+        };
+    })();
 
-            function findScope(name) {
-                var views = root.find('ui-view, [ui-view]');
-                for (var i = 0; i < views.length; i++) {
-                    var el = angular.element(views[i]);
-                    var data = el.data('$uiView');
-                    if (data && data.name === name) {
-                        return el.children().scope();
-                    }
-                }
-                return null;
+    var root = angular.element($rootElement);
+
+    function findScope(name) {
+        var views = root.find('ui-view, [ui-view]');
+        for (var i = 0; i < views.length; i++) {
+            var el = angular.element(views[i]);
+            var data = el.data('$uiView');
+            if (data && data.name === name) {
+                return el.children().scope();
             }
+        }
+        return null;
+    }
 
-            scope.$on('$stateChangeStart', function () {
-                scope.__proto__ = originalParent;
-            });
+    return {
+        terminal: true,
+        compile: function compile(el) {
+            var content = trim(el.html());
 
-            scope.$on('$stateChangeSuccess', function () {
-                $timeout(function () {
-                    var parentScope = findScope(viewName);
-                    if (!parentScope) {
-                        return;
+            return {
+                post: function (scope, element, attrs) {
+                    var viewName = attrs.importScope;
+                    var currentScope = null;
+
+                    function update() {
+                        var parentScope = findScope(viewName);
+                        var targetScope = parentScope || scope;
+
+                        if (targetScope !== currentScope) {
+                            var newWrapper = angular.element('<span>' + content + '</span>');
+                            $compile(newWrapper.contents())(targetScope);
+                            var oldContents = element.contents();
+                            var newContents = newWrapper.contents();
+                            $animate.enter(newContents, element);
+                            $animate.leave(oldContents);
+                            currentScope = targetScope;
+                        }
                     }
 
-                    scope.__proto__ = parentScope;
-                });
-            });
+                    scope.$watch(update);
+                }
+            };
         }
     };
 }]);
