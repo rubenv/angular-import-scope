@@ -31,6 +31,10 @@ angular.module('rt.importscope', ['ui.router']).directive('importScope', ["$comp
         compile: function compile(el) {
             var content = trim(el.html());
 
+            // Stops the progation of the inheritedData('$uiView') call inside ui-sref.
+            // Without this ui-sref would use an incorrect base state, which breaks relative references.
+            el.data('$uiView', {});
+
             return {
                 post: function (scope, element, attrs) {
                     var viewName = attrs.importScope;
