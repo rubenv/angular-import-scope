@@ -1,6 +1,3 @@
-(function () {
-    'use strict';
-
 angular.module('rt.importscope', ['ui.router']).directive('importScope', ["$compile", "$animate", "$rootElement", "$timeout", function ($compile, $animate, $rootElement, $timeout) {
     // Trim polyfill for old browsers (instead of jQuery)
     // Based on AngularJS-v1.2.2 (angular.js#620)
@@ -60,5 +57,3 @@ angular.module('rt.importscope', ['ui.router']).directive('importScope', ["$comp
         }
     };
 }]);
-
-})();
