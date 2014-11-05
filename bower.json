@@ -11,11 +11,11 @@
     "Gruntfile.coffee"
   ],
   "dependencies": {
-    "angular": "~1.2.8",
-    "angular-ui-router": "0.2.8-bowratic-tedium",
+    "angular": ">=1.2.8",
+    "angular-ui-router": ">=0.2.8-bowratic-tedium",
     "jquery": "~2.0.3"
   },
   "devDependencies": {
-    "angular-mocks": "~1.2.8"
+    "angular-mocks": ">=1.2.8"
   }
 }
