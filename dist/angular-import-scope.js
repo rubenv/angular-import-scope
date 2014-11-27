@@ -45,13 +45,15 @@ angular.module('rt.importscope', ['ui.router']).directive('importScope', ["$comp
                         var targetScope = parentScope || scope;
 
                         if (targetScope !== currentScope) {
-                            var newWrapper = angular.element('<span>' + content + '</span>');
-                            $compile(newWrapper.contents())(targetScope);
-                            var oldContents = element.contents();
-                            var newContents = newWrapper.contents();
-                            $animate.enter(newContents, element);
-                            $animate.leave(oldContents);
-                            currentScope = targetScope;
+                            $timeout(function () {
+                                var newWrapper = angular.element('<span>' + content + '</span>');
+                                $compile(newWrapper.contents())(targetScope);
+                                var oldContents = element.contents();
+                                var newContents = newWrapper.contents();
+                                $animate.enter(newContents, element);
+                                $animate.leave(oldContents);
+                                currentScope = targetScope;
+                            });
                         }
                     }
 
