@@ -1,6 +1,6 @@
 {
   "name": "angular-import-scope",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "dist/angular-import-scope.js",
   "ignore": [
     "**/.*",
