@@ -1,24 +1,24 @@
-angular.module('rt.importscope', ['ui.router']).directive('importScope', ["$compile", "$animate", "$rootElement", "$timeout", function ($compile, $animate, $rootElement, $timeout) {
+angular.module("rt.importscope", ["ui.router"]).directive("importScope", ["$compile", "$animate", "$rootElement", "$timeout", function ($compile, $animate, $rootElement, $timeout) {
     // Trim polyfill for old browsers (instead of jQuery)
     // Based on AngularJS-v1.2.2 (angular.js#620)
     var trim = (function () {
         if (!String.prototype.trim) {
             return function (value) {
-                return (typeof value === 'string') ? value.replace(/^\s*/, '').replace(/\s*$/, '') : value;
+                return (typeof value === "string") ? value.replace(/^\s*/, "").replace(/\s*$/, "") : value;
             };
         }
         return function (value) {
-            return (typeof value === 'string') ? value.trim() : value;
+            return (typeof value === "string") ? value.trim() : value;
         };
     })();
 
     var root = angular.element($rootElement);
 
     function findScope(name) {
-        var views = root.find('ui-view, [ui-view]');
+        var views = root.find("ui-view, [ui-view]");
         for (var i = 0; i < views.length; i++) {
             var el = angular.element(views[i]);
-            var data = el.data('$uiView');
+            var data = el.data("$uiView");
             if (data && data.name === name) {
                 return el.children().scope();
             }
@@ -31,12 +31,12 @@ angular.module('rt.importscope', ['ui.router']).directive('importScope', ["$comp
         compile: function compile(el) {
             var content = trim(el.html());
 
-            // Stops the progation of the inheritedData('$uiView') call inside ui-sref.
-            // Without this ui-sref would use an incorrect base state, which breaks relative references.
-            el.data('$uiView', {});
-
             return {
                 post: function (scope, element, attrs) {
+                    // Stops the progation of the inheritedData("$uiView") call inside ui-sref.
+                    // Without this ui-sref would use an incorrect base state, which breaks relative references.
+                    el.data("$uiView", {});
+
                     var viewName = attrs.importScope;
                     var currentScope = null;
 
@@ -45,15 +45,13 @@ angular.module('rt.importscope', ['ui.router']).directive('importScope', ["$comp
                         var targetScope = parentScope || scope;
 
                         if (targetScope !== currentScope) {
-                            $timeout(function () {
-                                var newWrapper = angular.element('<span>' + content + '</span>');
-                                $compile(newWrapper.contents())(targetScope);
-                                var oldContents = element.contents();
-                                var newContents = newWrapper.contents();
-                                $animate.enter(newContents, element);
-                                $animate.leave(oldContents);
-                                currentScope = targetScope;
-                            });
+                            var newWrapper = angular.element("<span>" + content + "</span>");
+                            $compile(newWrapper.contents())(targetScope);
+                            var oldContents = element.contents();
+                            var newContents = newWrapper.contents();
+                            $animate.enter(newContents, element);
+                            $animate.leave(oldContents);
+                            currentScope = targetScope;
                         }
                     }
 
